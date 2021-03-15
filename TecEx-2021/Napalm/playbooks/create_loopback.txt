@@ -1,0 +1,4 @@
+interface loopback 666
+description MyFirstAutomatedLoopback
+ip address 66.66.66.66 255.255.255.255
+no shut

@@ -13,7 +13,8 @@ for device_type, device in devices.items():
     napalm_device = driver(
         hostname=device["hostname"],
         username=device["username"],
-        password=device["password"]
+        password=device["password"],
+        optional_args={"global_delay_factor": 2}
     )
     napalm_device.open()
     print("\n ----- These are the NAPALM GETTERS ----")
@@ -29,8 +30,7 @@ for device_type, device in devices.items():
     print("\n ----- GET intefaces IP counters information  of the device -----")
     print(json.dumps(napalm_device.get_interfaces_counters(), sort_keys=True, indent=4))
 
-
     print("\n ----- GET Running Config of the device -----")
-    print(json.dumps(napalm_device.get_config(), sort_keys=True, indent=4))
+    print(napalm_device.get_config()["running"])
 
     napalm_device.close()
