@@ -2,7 +2,7 @@
 
 cisco_site_devices = {
     "ios": {
-        "hostname": "10.242.1.2",
+        "hostname": "*****",
         "username": "*****",
         "password": "*****",
         "device_type": "cisco_ios",
