@@ -1,0 +1,21 @@
+{
+    "config": {
+        "@xmlns": "urn:ietf:params:xml:ns:netconf:base:1.0",
+        "devices": {
+            "@xmlns": "http://ddn.mil.be/interface-information",
+            "device": {
+                "bandwidth": {
+                    "kilobits": null,
+                    "qos-reference": null
+                },
+                "description": null,
+                "intname": null,
+                "ip-v4": {
+                    "address": null,
+                    "mask": null
+                },
+                "name": null
+            }
+        }
+    }
+}
