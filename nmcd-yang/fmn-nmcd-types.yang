@@ -1,0 +1,386 @@
+module fmn-nmcd-types {
+	 yang-version 1.1;
+	 namespace "urn:fmn:params:xml:ns:yang:nmcd-types";
+	 prefix nmcd-types;
+	 import ietf-inet-types {
+	 prefix inet;
+	 }
+	 import ietf-yang-types {
+	 prefix yang;
+	 }
+	 organization
+	 "Federated Mission Networking (FMN) XX Working Group";
+	 contact
+	 "Editor: some-one
+	 <mailto:your-email@example.com>";
+	 description
+	 "This module defines the NMCD-wide type, identifier and enumeration
+	 information.";
+	 revision 2019-12-31 {
+	 description
+	 "Initial version";
+	 reference
+	 "FMN Spiral 4 Service Instructions for Protected Core Networking";
+	 }
+	 typedef pcs-id {
+	 type uint32;
+	 description
+	 "Each PCS is identified by a globally unique unsigned 32-bit decimal
+	 number. The number shall be identical to a 32-bit Autonomous System
+	 Number (ASN) that has been assigned to the PCS.";
+	 reference
+	 "STANAG 5640: Protected Core Networking (PCN) Deployable Specifications";
+	 }
+	 typedef cc-id {
+	 type uint32;
+	 description
+	 "Each CC is identified by a globally unique unsigned 32-bit decimal
+	 number. The number shall be identical to a 32-bit virtual Autonomous
+	 System Number (ASN) that has been assigned to the CC.";
+	 }
+	 typedef enode-id {
+	 type string;
+	 description
+	 "An E-node is identified by a combination of two unsigned decimal numbers
+	 separated by dot ('.'). First 32-bit decimal number indicates the PCS,
+	 while second 16-bit decimal number indicates the E-node. The E-node
+	 specific portion must be unique within the PCS.";
+	 reference
+	 "STANAG 5640: Protected Core Networking (PCN) Deployable Specifications";
+	 }
+	 typedef pfunc-id {
+	 type string;
+	 description
+	 "A Protection Functionality (P-functionality) is identified by a
+	 combination of two unsigned decimal numbers separated by a period
+	 character ('.'). The first 32-bit decimal number indicates the Colored
+	 Cloud (CC) (i.e., a 'virtual AS number' assigned to the CC), while the
+	 second 16-bit decimal number indicates the P-functionality.";
+	 reference
+	 "FMN Service Instructions for Protected Core Networking";
+	 }
+	 typedef pcn1-interface-id {
+	 type string;
+	 description
+	 "Each PCS shall assign a unique identifier to each PCN-1 interface in
+	 form of [32-bit.16-bit.16-bit]. The first 32-bits of the PCN-1 identifier
+	 shall depict the PCS itself (it will be the PCS identifier), while the
+	 other 32-bits shall represent the corresponding E-node and the PCN-1
+	 interface itself.";
+	 reference
+	 "STANAG 5640: Protected Core Networking (PCN) Deployable Specifications";
+	 }
+	 typedef pcn2-interface-id {
+	 type string;
+	 description
+	 "Each PCS shall assign a unique identifier to each PCN-2 interface in
+	 form [32-bit.16-bit.16-bit]. The first 32-bits of the PCN-2 identifier
+	 shall depict the PCS itself (it will be the PCS identifier), while the
+	 other 32-bits shall represent the corresponding E-node and the PCN-2
+	 interface itself.
+	 Each P-functionality shall assign a unique identifier to each PCN-2
+	 interface in form [32-bit.16-bit.16-bit]. The first 32-bits of the PCN-2
+	 identifier shall depict the CC the P-functionality belongs to (it will be
+	 the CC identifier), while the other 32-bits shall represent the
+	 corresponding P-functionality and the PCN-2 interface itself.";
+	 reference
+	 "STANAG 5640: Protected Core Networking (PCN) Deployable Specifications";
+	 }
+	typedef sla-id {
+	 type string;
+	 description
+	 "Unique identifier of a Service Level Agreement (SLA) between two
+	 affiliates. Each PCN-1 and 2 interface is associated with an SLA.";
+	 reference
+	 "STANAG 5640: Protected Core Networking (PCN) Deployable Specifications";
+	 }
+	 typedef consumer-id {
+	 type union {
+	 type cc-id;
+	 type pcs-id;
+	 }
+	 description
+	 "A consumer identifier for a SLA contact. Either a PCS identifier or a CC
+	 identifier.";
+	 }
+	 typedef endpoint-id {
+	 type union {
+	 type pcn1-interface-id;
+	 type pcn2-interface-id;
+	 }
+	 description
+	 "A PCN-interface identifier for a PCore end-point.";
+	 }
+	 typedef interface-type {
+	 type enumeration {
+	 enum "pcn-1" {
+	 description "A PCN-1 interface";
+	 }
+	 enum "pcn-2" {
+	 description "A PCN-2 interface";
+	 }
+	 }
+	 description
+	 "PCN interface types";
+	 }
+	 typedef bearer-type {
+	 type enumeration {
+	 enum "tunnel" {
+	 description
+	 "The bearer uses GRE-encapsulated tunnel to transmit traffic.";
+	 }
+	 enum "co-located" {
+	 description
+	 "The bearer uses native Ethernet framing to transmit traffic.";
+	 }
+	 }
+	 description
+	 "PCN interface bearer types";
+	 }
+	 typedef sla-type {
+	 type enumeration {
+	 enum "bearer" {
+	 description
+	 "The parameters relate to the underlying bearer connection for a PCN
+	 interface.";
+	 }
+	 enum "interface" {
+	 description
+	 "The parameters relate to PCN interfaces (PCN-1, PCN-2).";
+	 }
+	 enum "pcs-transit" {
+	 description
+	 "The parameters relate to PCS internal transit service.";
+	 }
+	 enum "pcore-service" {
+	 description
+	 "The parameters relate to PCore service to consumers.";
+	 }
+	 }
+	 description
+	 "The type of service.";
+	 }
+	 typedef service-type {
+	 type enumeration {
+	 enum "best-effort";
+	 enum "aggregate";
+	 enum "assured";
+	 enum "guaranteed";
+	 }
+	 description
+	 "The type of service.";
+	 }
+	 typedef restoration-priority {
+	 type enumeration {
+	 enum "none";
+	 enum "low";
+	 enum "medium";
+	 enum "high";
+	 enum "very high";
+	 }
+	 description
+	 "The restoration priority for a service bound to a SLA contract.";
+	 }
+	 typedef qos-parameter-area {
+	 type enumeration {
+	 enum "bearer";
+	 enum "pcn-1";
+	 enum "pcn-2";
+	 enum "service";
+	 }
+	 description
+	 "The scope of application for the QoS metric definition.";
+	 }
+	 typedef service-class {
+	 type enumeration {
+	 enum "best-effort" {
+	 description
+	 "The classification is a composite of all other service classes in
+	 this enumeration.";
+	 }
+	 enum sc0-low-prio-data {
+	 description
+	 "Low-priority data traffic.";
+	 }
+	 enum sc1-high-tput-data {
+	 description
+	 "High throughput data traffic.";
+	 }
+	 enum sc2-low-lat-data {
+	 description
+	 "Low latency data traffic.";
+	 }
+	 enum sc3-transaction {
+	 description
+	 "Transactional messaging traffic.";
+	 }
+	 enum sc4-video {
+	 description
+	 "Video stream data traffic.";
+	 }
+	 enum sc5-voice {
+	 description
+	 "Voice stream data traffic.";
+	 }
+	 enum sc6-sig-oam-mgmt {
+	 description
+	 "Control plane signaling, OAM, and network management traffic.";
+	 }
+	 enum sc7-circ-emu {
+	 description
+	 "Circuit Emulation traffic (e.g., TDM over IP).";
+	 }
+	 }
+	 description
+	 "The classification of the service (DSCP bits), according to STANAG
+	 4711.";
+	 }
+	 typedef interface-mode {
+	 type enumeration {
+	 enum "manual" {
+	 description "The interface is manually configured";
+	 }
+	 enum "autoconf" {
+	 description "The interface is automatically configured";
+	 }
+	 }
+	 description
+	 "FMN interface configuration type (manual, autoconf)";
+	 }
+	 typedef interface-status {
+	 type enumeration {
+	 enum "up" {
+	 description "The interface is ready to forward packets";
+	 }
+	 enum "down" {
+	 description "The interface is not yet established";
+	 }
+	 enum "disabled" {
+	 description "The interface is administratively disabled";
+	 }
+	 }
+	 description
+	 "The current operational status of the interface";
+	 }
+	 typedef tfc-type {
+	 type enumeration {
+	 enum "none" {
+	 value 0;
+	 description "No Traffic Flow Confidentiality";
+	 }
+	 enum "per-packet-authentication" {
+	 value 1;
+	 description
+	 "Ensures that each packet on the network is being sent by an
+	 authenticated originator. This authentication is either cryptographic
+	 authentication or procedural authorization of connecting party by
+	 physical recognition.";
+	 }
+	 enum "source-destination-hiding" {
+	 value 2;
+	 description
+	 "Ensures that source and destination address of a traffic flow are
+	 hidden during transmission. This is achieved by tunneling and
+	 encrypting traffic.";
+	 }
+	 enum "precedence-hiding" {
+	 value 3;
+	 description
+	 "Ensures that that in addition to source and destination address
+	 hiding, the quality of service information is not copied or mapped to
+	 a carrier precedence or traffic class.";
+	 }
+	 enum "traffic-flow-padding" {
+	 value 4;
+	 description
+	 "Ensures that the traffic is padded to a fixed length.";
+	 }
+	 enum "traffic-volume-hiding" {
+	 value 5;
+	 description
+	 "Ensures that there is constant data transmission on the link
+	 regardless of user traffic.";
+	 }
+	 }
+	 description
+	 "Available Traffic Flow Confidentiality types";
+	 }
+	 grouping descriptor-grouping {
+	 description "Entity descriptor construct";
+	 leaf name {
+	 type string {
+	 length 0..20;
+	 }
+	 description "Entity name";
+	 }
+	 }
+	 grouping address-grouping {
+	 description
+	 "A generic IP-version agnostic address grouping for local and
+	 peer addresses.";
+	 leaf local {
+	 type inet:ip-address;
+	 mandatory true;
+	 description "The local IP address";
+	 }
+	 leaf peer {
+	 type inet:ip-address;
+	 mandatory true;
+	 description "The peer IP address";
+	 }
+	 }
+	 grouping instance-version-grouping {
+	 description
+	 "Defines the current version attributes of this data instance";
+	 leaf version {
+	 type yang:counter64;
+	 mandatory true;
+	 description "The current version of the data instance.";
+	 }
+	 leaf updated {
+	 type yang:date-and-time;
+	 mandatory true;
+	 description "The last updated UTC timestamp of the data instance";
+	 }
+	 }
+	 grouping certificate-grouping {
+	 description "X.509 certificate information of the associated entity.";
+	 leaf distinguished-name {
+	 type string;
+	 mandatory true;
+	 description
+	 "The distinguished named of the certificate issued for this entity";
+	 }
+	 leaf serial-number {
+	 type string {
+	 length 1..40;
+	 }
+	 mandatory true;
+	 description
+	 "The serial number of the current end-entity certificate (RFC 5280,
+	 Section 4.1.2.2) in hexadecimal format without the 0X prefix.";
+	 reference
+	 "RFC 5280: Internet X.509 Public Key Infrastructure Certificate and
+	 Certificate Revocation List (CRL) Profile";
+	 }
+	 leaf certificate {
+	 type binary;
+	 description
+	 "The current X.509 end-entity certificate in PEM format.";
+	 }
+	 }
+	 grouping contact-grouping {
+ description
+ "Construct to represent contact information of the responsible party.";
+ leaf email {
+ type string;
+ description
+ "An email-address for the responsible party.";
+ }
+ leaf telephone {
+ type string;
+ description
+ "A telephone number for the responsible party.";
+ }
+ }
+ }

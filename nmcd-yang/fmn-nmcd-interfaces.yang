@@ -1,0 +1,282 @@
+module fmn-nmcd-interfaces {
+  yang-version 1.1;
+
+  namespace "urn:fmn:params:xml:ns:yang:nmcd-interfaces";
+
+  prefix nmcd-interfaces;
+
+  import fmn-nmcd-types {
+    prefix nmcd;
+  }
+
+  import fmn-nmcd-sla {
+    prefix sla;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Federated Mission Networking (FMN) XX Working Group";
+
+  contact
+    "Editor:   some-one
+               <mailto:your-email@example.com>";
+
+  description
+    "This module defines the NMCD-wide interface information. Entities include
+    the PCN-1 and 2 interfaces, and the bearer and path data models.";
+
+  revision 2019-12-31 {
+    description
+      "Initial version";
+    reference
+      "FMN Spiral 4 Service Instructions for Protected Core Networking";
+  }
+
+  grouping bearer-grouping {
+    leaf-list tfc-type {
+      type nmcd:tfc-type;
+      default "source-destination-hiding";
+      description
+        "The supported Traffic Flow Confidentiality types of the bearer";
+    }
+
+    leaf subnet {
+      type inet:ip-prefix;
+      description "The link-local IP subnet";
+    }
+
+    leaf mtu {
+      type uint32 {
+        range "68..max";
+      }
+      units octets;
+      mandatory true;
+      description
+        "The maximum transmission unit of the PCN interface.";
+    }
+
+    container address {
+      description "The transport layer IP addressing";
+
+      uses nmcd:address-grouping {
+        refine "local" {
+          description "The local transport layer IP address";
+        }
+
+        refine "peer" {
+          description "The peer transport layer IP address";
+        }
+      }
+    }
+
+    leaf-list sla-id {
+      type nmcd:sla-id;
+      min-elements 1;
+      description
+        "The list of SLA contract identifiers associated with this bearer
+        interface";
+    }
+
+    description
+      "Bearer information for the PCN interface";
+  }
+
+  grouping interface-grouping {
+    description
+      "Construct to describe interface-type agnostic parameters.";
+
+    uses nmcd:descriptor-grouping;
+
+    leaf mode {
+      type nmcd:interface-mode;
+      default "manual";
+      description "Interface configuration mode";
+    }
+
+    leaf mtu {
+      type uint32 {
+        range "68..max";
+      }
+      units octets;
+      mandatory true;
+      description
+        "The maximum transmission unit of the PCN interface.";
+    }
+
+    container address {
+      presence true;
+
+      description
+        "The GRE tunnel level addressing information. Omitted on co-located
+        PCN interfaces.";
+
+      uses nmcd:address-grouping {
+        refine "local" {
+          description "The local GRE tunnel IP address";
+        }
+
+        refine "peer" {
+          description "The peer GRE tunnel IP address";
+        }
+      }
+    }
+
+    leaf-list sla-id {
+      type nmcd:sla-id;
+      min-elements 1;
+      description
+        "The list of SLA contract identifiers associated with this PCN
+        interface";
+    }
+
+    container bearer {
+      uses bearer-grouping;
+
+      description "Bearer properties of the PCN interface";
+    }
+  }
+
+  // PCN-1 interface data model
+  grouping pcn-1-grouping {
+    leaf local-id {
+      type nmcd:pcn1-interface-id;
+      mandatory true;
+      description "The local PCN-1 interface identifier";
+    }
+
+    leaf peer-id {
+      type nmcd:pcn1-interface-id;
+      default "0.0.0";
+      description "The peer PCN-1 interface identifier";
+    }
+
+    uses interface-grouping;
+
+    leaf peer-entity-id {
+      type nmcd:pcs-id;
+      description "Peer PCS identifier";
+    }
+
+    description
+      "Construct to describe the static properties of a PCN-1 interface.";
+  }
+
+  grouping pcn-2-grouping {
+    leaf local-id {
+      type nmcd:pcn2-interface-id;
+      mandatory true;
+      description "The local PCN-2 interface identifier";
+    }
+
+    leaf peer-id {
+      type nmcd:pcn2-interface-id;
+      default "0.0.0";
+      description "The peer PCN-2 interface identifier";
+    }
+
+    uses interface-grouping {
+      refine bearer {
+        presence true;
+      }
+    }
+
+    description
+      "Construct to describe the static properties of a PCN-2 interface.";
+  }
+
+  grouping pcn-2-enode-grouping {
+    uses pcn-2-grouping;
+
+    leaf peer-entity-id {
+      type nmcd:cc-id;
+      description "Peer CC identifier";
+    }
+
+    description
+      "Construct to describe the static properties of a PCN-2 interface on an
+      E-Node.";
+  }
+
+  grouping pcn-2-pfunctionality-grouping {
+    uses pcn-2-grouping;
+
+    leaf peer-entity-id {
+      type nmcd:pcs-id;
+      description "Peer PCS identifier";
+    }
+
+    description
+      "Construct to describe the static properties of a PCN-2 interface on a
+      P-Functionality.";
+  }
+
+  grouping pcn-property-grouping {
+    description
+      "Estimated traffic properties of the PCN-1 interface.";
+
+    list service-class {
+      max-elements 8;
+      description
+        "List of traffic properties for the service classes defined for this
+        PCN-1 interface.";
+
+      uses sla:service-class-object-grouping;
+    }
+
+    uses sla:unidir-connection-state-grouping;
+  }
+
+  grouping interface-state-grouping {
+    description
+      "Construct to describe the dynamic properties of a PCN interface.";
+
+    leaf state {
+      type nmcd:interface-status;
+      mandatory true;
+      description "The PCN interface status.";
+    }
+
+    container ingress-properties {
+      uses pcn-property-grouping;
+
+      description
+        "Ingress traffic properties of the PCN interface.";
+    }
+
+    container egress-properties {
+      uses pcn-property-grouping;
+
+      description
+        "Ingress traffic properties of the PCN interface.";
+    }
+  }
+
+  grouping pcn1-state-grouping {
+    description
+      "Construct to describe the dynamic properties of a PCN-1 interface.";
+
+    leaf id {
+      type nmcd:pcn1-interface-id;
+      mandatory true;
+      description "The PCN-1 identifier of the interface";
+    }
+
+    uses interface-state-grouping;
+  }
+
+  grouping pcn2-state-grouping {
+    description
+      "Construct to describe the dynamic properties of a PCN-2 interface.";
+
+    leaf id {
+      type nmcd:pcn2-interface-id;
+      mandatory true;
+      description "The PCN-2 identifier of the interface";
+    }
+
+    uses interface-state-grouping;
+  }
+}

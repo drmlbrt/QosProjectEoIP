@@ -1,0 +1,136 @@
+module fmn-nmcd-pcs {
+  yang-version 1.1;
+
+  namespace "urn:fmn:params:xml:ns:yang:nmcd-pcs";
+
+  prefix nmcd-pcs;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import fmn-nmcd-types {
+    prefix nmcd;
+  }
+
+  import fmn-nmcd-entities {
+    prefix entity;
+  }
+
+  organization
+    "Federated Mission Networking (FMN) XX Working Group";
+
+  contact
+    "Editor:   some-one
+               <mailto:your-email@example.com>";
+
+  description
+    "This module defines the NMCD-wide Protected Core Segment (PCS)
+    abstraction.  The abstraction is exchanged in the NMCD federation by
+    entities to form the PCS Operational Picture (PCSOP).";
+
+  revision 2019-12-31 {
+    description
+      "Initial version";
+    reference
+      "FMN Spiral 4 Service Instructions for Protected Core Networking";
+  }
+
+  grouping pcs-grouping {
+    description "The abstraction of a Protected Core Segment.";
+
+    leaf id {
+      type nmcd:pcs-id;
+      mandatory true;
+      description "The identifier of the PCS.";
+    }
+
+    container contact {
+      uses nmcd:contact-grouping;
+      presence true;
+      description
+        "Contact information for the responsible party of this PCS.";
+    }
+
+    list e-node {
+      key "id";
+      min-elements 1;
+      max-elements 65535;
+
+      description
+        "The list of Enforcement Nodes of the PCS";
+
+      uses entity:e-node-grouping;
+    }
+
+    list transit-path {
+      key "ingress-interface egress-interface";
+
+      leaf ingress-interface {
+        type nmcd:endpoint-id;
+        mandatory true;
+        description "The ingress PCN interface of the path in the PCS";
+      }
+
+      leaf egress-interface {
+        type nmcd:endpoint-id;
+        mandatory true;
+        description "The egress PCN interface of the path in the PCS";
+      }
+
+      leaf-list tfc-type {
+        type nmcd:tfc-type;
+        min-elements 1;
+        max-elements 5;
+        description
+          "The common denominators of the TFC types among the individual
+          internal links that comprise the network path.";
+      }
+
+      leaf sla-id {
+        type nmcd:sla-id;
+        mandatory true;
+        description
+          "Local SLA contract identifier associated with this path.";
+      }
+
+      description
+        "The PCN interface-to-interface unidirectional transit paths of the
+        local PCS.
+
+        Includes permutations of the paths between all PCN-1 interfaces (i.e.,
+        transit traffic), and paths between all PCN-1 and PCN-2 interfaces for
+        each CC domain.  For PCN-1 to PCN-2 paths, PCN-1 paths are considered
+        to be included in every CC domain.";
+    }
+
+    // The list of all IP prefixes advertised by this PCS segment. Consists of
+    // both the prefixes advertised by the attached P-functionalities, as well
+    // as any IP prefixes advertised by E-nodes
+    leaf-list advertised-prefix {
+      type inet:ip-prefix;
+
+      description
+        "The list of advertised prefixes in the local PCS. A combination of
+        E-node derived prefixes, and the prefixes advertised on behalf of the
+        attached P-functionalities.";
+    }
+  }
+
+  list pcs {
+    key "id";
+    config false;
+
+    uses pcs-grouping;
+
+    container metadata {
+      uses nmcd:instance-version-grouping;
+
+      description
+        "Metadata information of this static data instance";
+    }
+
+    description
+      "A construct representing the static data of a Protected Core Segment";
+  }
+}

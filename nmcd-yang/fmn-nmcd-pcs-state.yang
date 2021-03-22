@@ -1,0 +1,140 @@
+module fmn-nmcd-pcs-state {
+  yang-version 1.1;
+
+  namespace "urn:fmn:params:xml:ns:yang:nmcd-pcs-state";
+
+  prefix nmcd-pcs-state;
+
+  import fmn-nmcd-types {
+    prefix nmcd;
+  }
+
+  import fmn-nmcd-sla {
+    prefix sla;
+  }
+
+  import fmn-nmcd-interfaces {
+    prefix iface;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Federated Mission Networking (FMN) XX Working Group";
+
+  contact
+    "Editor:   some-one
+               <mailto:your-email@example.com>";
+
+  description
+    "This module defines the NMCD-wide Protected Core Segment (PCS)
+    abstraction.  The abstraction is exchanged in the NMCD federation by
+    entities to form the PCS Operational Picture (PCSOP).";
+
+  revision 2019-12-31 {
+    description
+      "Initial version";
+    reference
+      "FMN Spiral 4 Service Instructions for Protected Core Networking";
+  }
+
+  grouping path-state-grouping {
+    description
+      "Construct to describe the dynamic properties of a transit path in a
+      PCS.";
+
+    leaf ingress-interface {
+      type nmcd:endpoint-id;
+      mandatory true;
+      description "The ingress PCN interface of the path in a PCS";
+    }
+
+    leaf egress-interface {
+      type nmcd:endpoint-id;
+      mandatory true;
+      description "The egress PCN interface of the path in a PCS";
+    }
+
+    container properties {
+      description
+        "Estimated traffic properties of the transit path.";
+
+      list service-class {
+        max-elements 8;
+        description
+          "List of traffic properties for the service classes defined for this
+          transit path.";
+
+        uses sla:service-class-object-grouping;
+      }
+
+      uses sla:unidir-connection-state-grouping;
+    }
+  }
+
+  grouping pcs-state-grouping {
+    description "The abstraction of a Protected Core Segment.";
+
+    leaf id {
+      type nmcd:pcs-id;
+      mandatory true;
+      description "The identifier of the PCS.";
+    }
+
+    leaf-list reachable-prefix {
+      type inet:ip-prefix;
+      description
+        "The list of currently reacahable IP-prefixes through this PCS.";
+    }
+
+    list transit-path {
+      key "ingress-interface egress-interface";
+      description
+        "List of dynamic properties for the transit paths.";
+      uses path-state-grouping;
+    }
+
+    list pcn-1 {
+      key "id";
+      description
+        "List of properties for PCN-1 interfaces.";
+      uses iface:pcn1-state-grouping;
+    }
+
+    list pcn-2 {
+      key "id";
+      description
+        "List of properties for PCN-2 interfaces.";
+      uses iface:pcn2-state-grouping;
+    }
+
+    list sla {
+      key "id";
+      uses sla:kpi-monitoring-object-grouping;
+      description
+        "List of dynamic KPI report information for SLA contracts with this
+        PCS.";
+    }
+  }
+
+  list pcs {
+    key "id";
+    config false;
+
+    description
+      "Current traffic state of all the paths, PCN-1, and PCN-2 interfaces of
+      the local PCS segment.";
+
+    uses pcs-state-grouping;
+
+    container metadata {
+      uses nmcd:instance-version-grouping;
+
+      description
+        "Metadata information of this dynamic data instance";
+    }
+
+  }
+}

@@ -1,39 +1,551 @@
-module FMN-NMCD-SLA {
-	yang-version 1.1;
-	namespace "http://FMN/NMCD/SLA";
-	prefix nmcdsla;
-	
-	organization
-		"FMN-PCS";
-	
-	contact 
-		"
-		editor: Dermul Bart 
-				<bart.dermul@mil.be>
-		";
-	description 
-		"
-		This module contains the contrat SLA information. 
-		Documents describing this model are found in the spiral 4 specifications.
-		FMN Tidepedia as source.
-		This version of this YANG module is part of FMN-XXX; see the documentation for
-		all details.
-		Standard: https://tools.ietf.org/html/rfc7950
-		";
-/*
- * Revision information
- */
-	
-	
-	revision 2020-03-01 {
-		description "Initial draft of the NMCD Yang model.";
-		reference "added this as free field when needed Part of the YANG RFC7950 standard";
-	}
-/* 
- * TypeDefs
- */
+module fmn-nmcd-sla {
+  yang-version 1.1;
 
+  namespace "urn:fmn:params:xml:ns:yang:nmcd-sla";
 
+  prefix nmcd-sla;
 
+  import ietf-yang-types {
+    prefix yang;
+  }
 
+  import fmn-nmcd-types {
+    prefix nmcd;
+  }
+
+  organization
+    "Federated Mission Networking (FMN) XX Working Group";
+
+  contact
+    "Editor:   some-one
+               <mailto:your-email@example.com>";
+
+  description
+    "This module defines the NMCD SLA related objects for PCN-1, 2 and bearer
+    interfaces.";
+
+  revision 2019-12-31 {
+    description
+      "Initial version";
+    reference
+      "FMN Spiral 4 Service Instructions for Protected Core Networking";
+  }
+
+  grouping capacity-object-grouping {
+    leaf nominal-bandwidth {
+      type uint64;
+      units "bps";
+      default 0;
+      description
+        "The nominal maximum bandwidth allocated for traffic";
+    }
+
+    leaf throughput {
+      type uint64;
+      units "bps";
+      default 0;
+      description "Current estimated throughput";
+    }
+
+    description
+      "Measured capacity-related information";
+  }
+
+  grouping kpi-avg-measured-object-grouping {
+    leaf avg-rate {
+      type uint32;
+      units "bps";
+      default 0;
+      description
+        "Mean Service Rate indicates the capacity that is estimated in bits per
+        second (bps).";
+    }
+
+    leaf oneway-avg-delay {
+      type uint32;
+      units "us";
+      default 0;
+      description
+        "Mean One-Way Transfer Delay indicates the mean value of the delay
+        estimated in microseconds (us).";
+    }
+
+    leaf oneway-avg-loss {
+      type decimal64 {
+        fraction-digits 16;
+        range 0..1;
+      }
+
+      default 0.0;
+      description
+        "Mean One-Way Packet Loss Ratio Indicates the ration of lost packets to
+        transmitted packets in decimal with up to 16 digits.";
+    }
+
+    leaf twoway-avg-delay {
+      type uint32;
+      units "us";
+      default 0;
+      description
+        "Mean Two-Way Transfer Delay indicates the mean value of the estimated
+        delay in microseconds (us).";
+    }
+
+    leaf twoway-avg-loss {
+      type decimal64 {
+        fraction-digits 16;
+        range 0..1;
+      }
+
+      default 0.0;
+      description
+        "Mean Two-Way Packet Loss Ratio Indicates the ratio of lost packets to
+        transmitted packets in decimal with up to 16 digits.";
+    }
+
+    description
+      "Measured SLA-related KPI information, over a timespan.";
+  }
+
+  grouping kpi-measured-object-grouping {
+    container short {
+      uses kpi-avg-measured-object-grouping;
+
+      description
+        "Measured SLA-contract related information over a one second period.";
+    }
+
+    container long {
+      uses kpi-avg-measured-object-grouping;
+
+      description
+        "Measured SLA-contract related information over a 5-minute period.";
+    }
+
+    leaf min-oneway-delay {
+      type uint32;
+      default 0;
+      description
+        "Minimum one-way transfer delay indicates the minimum value of the
+        delay experienced in microseconds (us).";
+    }
+
+    leaf min-twoway-delay {
+      type uint32;
+      default 0;
+      description
+        "Minimum two-way transfer delay indicates the minimum value of the
+        delay experienced in microseconds (us).";
+    }
+
+    leaf max-oneway-delay {
+      type uint32;
+      default 0;
+      description
+        "Maximum one-way transfer delay indicates the maximum value of the
+        delay experienced in microseconds (us).";
+    }
+
+    leaf max-twoway-delay {
+      type uint32;
+      default 0;
+      description
+        "Maximum two-way transfer delay indicates the maximum value of the
+        delay experienced in microseconds (us).";
+    }
+
+    description
+      "Measured SLA-related information.";
+  }
+
+  grouping kpi-monitoring-object-grouping {
+    leaf id {
+      type nmcd:sla-id;
+      description
+        "The identifier of the SLA contract.";
+    }
+
+    list kpi-metric {
+      min-elements 1;
+      max-elements 8;
+
+      leaf-list service-class {
+        type nmcd:service-class;
+        min-elements 1;
+        max-elements 8;
+        description
+          "The list of service class values to apply to this KPI definition.";
+      }
+
+      uses kpi-measured-object-grouping;
+
+      description
+        "Reported metrics information for a KPI definition.";
+    }
+
+    description
+      "Construct to convey dynamically reported information for a SLA contract
+      (defined by a sla-id).";
+  }
+
+  grouping service-class-object-grouping {
+    leaf-list service-class {
+      type nmcd:service-class;
+      min-elements 1;
+      max-elements 8;
+      description
+        "The list of service class values to apply to this KPI definition.";
+    }
+
+    description
+      "Construct to describe the service-class specific traffic properties for
+      the entity.";
+
+    uses capacity-object-grouping;
+  }
+
+  grouping connection-object-grouping {
+    leaf delay {
+      type uint64;
+      units "us";
+      default 0;
+      description "Estimated one-way delay";
+    }
+
+    leaf jitter {
+      type uint64;
+      units "us";
+      default 0;
+      description "Estimated delay variance";
+    }
+
+    description "Measured connection-related information";
+  }
+
+  grouping unidir-connection-state-grouping {
+    description
+      "Construct to collect unidirectional traffic properties.";
+
+    uses connection-object-grouping;
+
+    uses capacity-object-grouping;
+  }
+
+  grouping provider-identification-grouping {
+    leaf id {
+      type nmcd:pcs-id;
+      mandatory true;
+      description
+        "The provider identifier of the PCS.";
+    }
+
+    leaf service-id {
+      type string;
+      description
+        "An identifier of the service provided from the service catalogue of
+        the provider.";
+    }
+
+    leaf instance-id {
+      type string;
+      description
+        "A unique instance identifier for the provisioned service.";
+    }
+
+    description
+      "Construct to collect provider identification information for a service";
+  }
+
+  grouping consumer-identification-grouping {
+    leaf id {
+      type nmcd:consumer-id;
+      mandatory true;
+      description
+        "The identifier of the consumer (i.e., PCS or a CC) belonging to the
+        orchestrated service.";
+    }
+
+    description
+      "Construct to collect consumer identification information for a service";
+  }
+
+  grouping sla-identification-grouping {
+    leaf sla-type {
+      type nmcd:sla-type;
+      mandatory true;
+      description
+        "Type of the SLA contract.";
+    }
+
+    list provider {
+      key "id";
+      min-elements 1;
+      uses provider-identification-grouping;
+      description
+        "Provider information (i.e., PCS) of orchestrated service.";
+    }
+
+    list consumer {
+      key "id";
+      uses consumer-identification-grouping;
+      description
+        "Consumer information (i.e., a PCS or a CC) of orchestrated service.";
+    }
+
+    leaf orchestrator-id {
+      type nmcd:pcs-id;
+      mandatory true;
+      description
+        "The identifier of the provider (a PCS) providing orchestration for the
+        service (authoritative owner of the service). A provider information
+        object must be defined for the orchestrator of the service.";
+    }
+
+    leaf start-time {
+      type yang:date-and-time;
+      description
+        "A resource activation time for the service. If omitted, the service
+        resources are activated during provisioning.";
+    }
+
+    leaf end-time {
+      type yang:date-and-time;
+      description
+        "A resource de-activation time for the service. Must be further in time
+        than start-time.";
+    }
+
+    description
+      "A construct to describe the identification information for a SLA
+      contract.";
+  }
+
+  grouping endpoint-provided-grouping {
+    leaf id {
+      type nmcd:endpoint-id;
+      mandatory true;
+      description
+        "The end-point (PCN-1 or 2 interface) identifier.";
+    }
+
+    leaf interface-type {
+      type nmcd:interface-type;
+      mandatory true;
+      description
+        "The PCN interface type on which the service is provided.";
+    }
+
+    leaf interface-mode {
+      type nmcd:interface-mode;
+      mandatory true;
+      description
+        "The configuration mode of the interface for which the service is
+        provided.";
+    }
+
+    leaf bearer-type {
+      type nmcd:bearer-type;
+      mandatory true;
+      description
+        "The underlying bearer connection type on which the service is
+        provided on the end-point.";
+    }
+
+    leaf-list tfc-type {
+      type nmcd:tfc-type;
+      min-elements 1;
+      max-elements 5;
+      description
+        "The supported tfc-types for the end-point bearer interface.";
+    }
+
+    description
+      "Construct to describe end-point specific information for service
+      provided.";
+  }
+
+  grouping service-provided-grouping {
+    list service-endpoint {
+      key "id";
+      min-elements 2;
+      uses endpoint-provided-grouping;
+
+      description
+        "The end-point information for the service provided.";
+    }
+
+    description
+      "Characteristics of the service provided.";
+  }
+
+  grouping service-oos-grouping {
+    leaf start-time {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "The start time of the out of service window.";
+    }
+
+    leaf end-time {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "The end time of the out of service window.";
+    }
+
+    description
+      "Construct for reporting out of service time window for this SLA
+      contract.";
+  }
+
+  grouping service-level-grouping {
+    leaf service-type {
+      type nmcd:service-type;
+      mandatory true;
+      description
+        "The service type offered by this SLA contract.";
+    }
+
+    leaf restoration-priority {
+      type nmcd:restoration-priority;
+      mandatory true;
+      description
+        "The restoration priority for this service from the perspective of the
+        consumer.";
+    }
+
+    list out-of-service-times {
+      uses service-oos-grouping;
+
+      description
+        "List of out of service time windows for this SLA contract.";
+    }
+
+    description
+      "A construct to describe the parameters of the agreed service level for a
+      SLA contract.";
+  }
+
+  grouping kpi-definitions-grouping {
+    leaf-list service-class {
+      type nmcd:service-class;
+      description
+        "The list of service class values to apply to this KPI definition.";
+    }
+
+    leaf rate {
+      type uint32;
+      default 0;
+    }
+
+    leaf delay {
+      type uint32;
+      default 0;
+    }
+
+    leaf loss {
+      type decimal64 {
+        fraction-digits 16;
+        range -1|0..1;
+      }
+      default -1;
+    }
+  }
+
+  grouping kqi-definitions-grouping {
+    leaf service-availability {
+      type decimal64 {
+        fraction-digits 5;
+        range 0..1;
+      }
+      mandatory true;
+      description
+        "This parameter defines the Service Availability quality indicator.
+
+        Service Unavailability (SUA) is calculated as a fraction of time when
+        service is degraded e.g. Any of the service KPIs that exceed the
+        threshold level. Service Availability is expressed as a percentage of
+        time when service is within thresholds e.g. 100% - SUA%";
+    }
+
+    leaf mtrr {
+      type uint32;
+      units "s";
+      description
+        "This parameter indicates average time it takes to repair faulty
+        services expressed in seconds (s).";
+    }
+
+    leaf mtbf {
+      type uint32;
+      units "s";
+      description
+        "This parameter indicates average time between failures of the service
+        expressed in seconds (s).";
+    }
+  }
+
+  grouping qos-metrics-grouping {
+    leaf parameter-area {
+      type nmcd:qos-parameter-area;
+      mandatory true;
+    }
+
+    list kpi-definitions {
+      min-elements 1;
+      max-elements 8;
+      uses kpi-definitions-grouping;
+    }
+
+    container kqi-definitions {
+      uses kqi-definitions-grouping;
+    }
+  }
+
+  list sla {
+    key "id";
+    config false;
+
+    leaf id {
+      type nmcd:sla-id;
+      mandatory true;
+      description
+        "The SLA contract identifier";
+    }
+
+    description
+      "An entry in the SLA contract database for this entity.";
+
+    container identification {
+      uses sla-identification-grouping;
+
+      description
+        "Construct to describe the SLA contract identification information.";
+    }
+
+    container service-provided {
+      uses service-provided-grouping;
+      description
+        "Construct to describe the provided service by this SLA contract.";
+    }
+
+    container service-level {
+      uses service-level-grouping;
+
+      description
+        "Construct to describe the provided service level by this SLA
+        contract.";
+    }
+
+    container qos-metrics {
+      uses qos-metrics-grouping;
+    }
+
+    container metadata {
+      uses nmcd:instance-version-grouping;
+
+      description
+        "Metadata information of this SLA contract repository instance";
+    }
+  }
 }

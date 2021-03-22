@@ -1,0 +1,81 @@
+module fmn-nmcd-cc {
+  yang-version 1.1;
+
+  namespace "urn:fmn:params:xml:ns:yang:nmcd-cc";
+
+  prefix nmcd-cc;
+
+  import fmn-nmcd-types {
+    prefix nmcd;
+  }
+
+  import fmn-nmcd-entities {
+    prefix entity;
+  }
+
+  organization
+    "Federated Mission Networking (FMN) XX Working Group";
+
+  contact
+    "Editor:   some-one
+               <mailto:your-email@example.com>";
+
+  description
+    "This module defines the NMCD-wide Protected Core Segment (PCS)
+    abstraction. The abstraction is exchanged in the NMCD federation by
+    entities to form the PCS Operational Picture (PCSOP).";
+
+  revision 2019-12-31 {
+    description
+      "Initial version";
+    reference
+      "FMN Spiral 4 Service Instructions for Protected Core Networking";
+  }
+
+  grouping cc-grouping {
+    description "The abstraction of a Protected Core Segment.";
+
+    leaf id {
+      type nmcd:cc-id;
+      mandatory true;
+      description "The identifier of the CC.";
+    }
+
+    leaf originator-id {
+      type nmcd:pcs-id;
+      description
+        "The originating PCS of this CC information. May be omitted if the
+        information is originated by the CC itself.";
+    }
+
+    container contact {
+      uses nmcd:contact-grouping;
+      presence true;
+      description
+        "Contact information for the responsible party of this CC.";
+    }
+
+    container p-functionality {
+      description "The Protection Functionality of the CC";
+
+      uses entity:p-func-grouping;
+    }
+  }
+
+  list cc {
+    key "id";
+    config false;
+
+    uses cc-grouping;
+
+    container metadata {
+      uses nmcd:instance-version-grouping;
+
+      description
+        "Metadata information of this static data instance";
+    }
+
+    description
+      "A construct representing the static data of a Coloured Cloud";
+  }
+}

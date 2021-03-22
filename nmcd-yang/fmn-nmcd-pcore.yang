@@ -1,146 +1,240 @@
 module fmn-nmcd-pcore {
-	yang-version 1.1;
-	namespace "urn:fmn:params:xml:ns:yang:nmcd-pcore";
-	prefix nmcdsla;
+  yang-version "1.1";
 
-	import ietf-yang-types {
-		prefix yang;
-	}
-	
-	organization
-		"FMN-PCS";
-	
-	contact 
-		"
-		editor: Dermul Bart 
-				<bart.dermul@mil.be>
-		";
-	description 
-		"
-		This module contains the contrat SLA information. 
-		Documents describing this model are found in the spiral 4 specifications.
-		FMN Tidepedia as source.
-		This version of this YANG module is part of FMN-XXX; see the documentation for
-		all details.
-		Standard: https://tools.ietf.org/html/rfc7950
-		";
-/*
- * Revision information
- */
-	
-	
-	revision 2019-12-31 {
-		description 
-		"Initial draft of the NMCD Yang model.";
-		reference 
-		"added this as free field when needed Part of the YANG RFC7950 standard";
-	}
-/* 
- * TypeDefs
- */
+  namespace "urn:fmn:params:xml:ns:yang:nmcd-pcore";
 
+  prefix nmcd-pcore;
 
-/*
- *Containers
- */
+  import fmn-nmcd-types {
+    prefix nmcd;
+  }
 
-	container pcore {
-		list fmn-nmcd-pcs.pcs{
-			key "id";	
-			leaf id {
-				type uint32 ;
-			}
-			container metadata {
-				leaf version {
-					type yang:counter64 ; 
-				}
-				leaf updated {
-					type yang:date-and-time ;
-				}
-			}
-			description "";
-		}
-		list fmn-nmcd-pcs-state.pcs {
-			key "id";	
-			leaf id {
-				type uint32;
-			}
-			container metadata {
-				leaf version {
-					type yang:counter64 ;
-				}
-				leaf updated {
-					type yang:date-and-time ;
-				}
-			}	
-			description "";
-		}
-		list fmn-nmcd-cc.cc {
-			key "id";	
-			leaf id {
-				type uint32;
-			}
-			leaf originator-id {
-				type uint32 ;
-			}
-			container metadata {
-			
-				leaf version {
-					type yang:counter64 ;
-				}
-				leaf updated {
-					type yang:date-and-time ;
-				}
-			}
-			description "";		
-		}
-		list fmn-nmcd-cc-state.cc {
-			key "id";	
-			leaf id {
-				type uint32 ;
-			}
-			leaf originator-id {
-				type uint32 ;
-			}
-			container metadata {
-				leaf version{
-					type yang:counter64 ;
-				}
-				leaf updated {
-					type yang:date-and-time ;
-				}
-			}	
-			description "";
-		}	
-		list fmn-nmcd-sla.sla {
-			key "id";	
-			leaf id {
-				type string ;
-			}
-			container metadata {
-				leaf version {
-					type yang:counter64 ;
-				}
-				leaf updated {
-					type yang:date-and-time ;
-				}
-			}	
-			description "";
-		}
-		list fmn-nmcd-sla-report.sla {
-			key "id";	
-			leaf id {
-				type string ;
-			}
-			container metadata {
-				leaf version {
-					type yang:counter64;
-				}
-				leaf updated {
-					type yang:date-and-time;
-				}
-			}	
-			description "";
-		}
-	}
+  import fmn-nmcd-pcs {
+    prefix nmcd-pcs;
+  }
+
+  import fmn-nmcd-pcs-state {
+    prefix nmcd-pcs-state;
+  }
+
+  import fmn-nmcd-cc {
+    prefix nmcd-cc;
+  }
+
+  import fmn-nmcd-cc-state {
+    prefix nmcd-cc-state;
+  }
+
+  import fmn-nmcd-sla {
+    prefix nmcd-sla;
+  }
+
+  import fmn-nmcd-sla-report {
+    prefix nmcd-sla-report;
+  }
+
+  organization
+    "Federated Mission Networking (FMN) XX Working Group";
+
+  contact
+    "Editor:   some-one
+               <mailto:your-email@example.com>";
+
+  description
+    "This module defines the information availability objects of a NMCD
+    Information Exchange Server. NMCD information exchange clients can query
+    for data instances following this module to determine the information
+    availability and versioning of peer entities' NMCD IES.";
+
+  revision 2019-12-31 {
+    description
+      "Initial version";
+    reference
+      "FMN Spiral 4 Service Instructions for Protected Core Networking";
+  }
+
+  grouping pcs-entry-grouping {
+    description
+      "Construct to collect metadata information from static PCS module.";
+
+    leaf id {
+      type leafref {
+        path '/nmcd-pcs:pcs/nmcd-pcs:id';
+      }
+
+      description "The identifier of the PCS.";
+    }
+
+    container metadata {
+      description "Metadata information for an entity.";
+      uses nmcd:instance-version-grouping;
+    }
+  }
+
+  grouping pcs-state-entry-grouping {
+    description
+      "Construct to collect metadata information from dynamic PCS module.";
+
+    leaf id {
+      type leafref {
+        path '/nmcd-pcs-state:pcs/nmcd-pcs-state:id';
+      }
+
+      description "The identifier of the PCS.";
+    }
+
+    container metadata {
+      description "Metadata information for an entity.";
+      uses nmcd:instance-version-grouping;
+    }
+  }
+
+  grouping cc-entry-grouping {
+    description
+      "Construct to collect metadata information from static CC module.";
+
+    leaf id {
+      type leafref {
+        path '/nmcd-cc:cc/nmcd-cc:id';
+      }
+
+      description "The identifier of the CC.";
+    }
+
+    leaf originator-id {
+      type leafref {
+        path '/nmcd-cc:cc/nmcd-cc:originator-id';
+      }
+
+      description
+        "The originating PCS of this CC information. May be omitted if the
+        information is originated by the CC itself.";
+    }
+
+    container metadata {
+      description "Metadata information for an entity.";
+      uses nmcd:instance-version-grouping;
+    }
+  }
+
+  grouping cc-state-entry-grouping {
+    description
+      "Construct to collect metadata information from dynamic CC module.";
+
+    leaf id {
+      type leafref {
+        path '/nmcd-cc-state:cc/nmcd-cc-state:id';
+      }
+
+      description "The identifier of the CC.";
+    }
+
+    leaf originator-id {
+      type leafref {
+        path '/nmcd-cc-state:cc/nmcd-cc-state:originator-id';
+      }
+
+      description
+        "The originating PCS of this CC information. May be omitted if the
+        information is originated by the CC itself.";
+    }
+
+    container metadata {
+      description "Metadata information for an entity.";
+      uses nmcd:instance-version-grouping;
+    }
+  }
+
+  grouping sla-entry-grouping {
+    description
+      "Construct to collect metadata information from SLA module.";
+
+    leaf id {
+      type leafref {
+        path '/nmcd-sla:sla/nmcd-sla:id';
+      }
+
+      description
+        "The identifier of the SLA contract.";
+    }
+
+    container metadata {
+      description "Metadata information for a SLA contract.";
+      uses nmcd:instance-version-grouping;
+    }
+  }
+
+  grouping sla-report-entry-grouping {
+    description
+      "Construct to collect metadata information from SLA Report module.";
+
+    leaf id {
+      type leafref {
+        path '/nmcd-sla-report:sla/nmcd-sla-report:id';
+      }
+
+      description
+        "The identifier of the SLA contract.";
+    }
+
+    container metadata {
+      description "Metadata information for the reports of a SLA contract.";
+      uses nmcd:instance-version-grouping;
+    }
+  }
+
+  grouping info-grouping {
+    description
+      "Information availability status of the NMCD information exchange
+      server";
+
+    list fmn-nmcd-pcs.pcs {
+      key "id";
+      description
+        "List of static PCS metadata information objects.";
+      uses pcs-entry-grouping;
+    }
+
+    list fmn-nmcd-pcs-state.pcs {
+      key "id";
+      description
+        "List of dynamic PCS metadata information objects.";
+      uses pcs-state-entry-grouping;
+    }
+
+    list fmn-nmcd-cc.cc {
+      key "id";
+      description
+        "List of static CC metadata information objects.";
+      uses cc-entry-grouping;
+    }
+
+    list fmn-nmcd-cc-state.cc {
+      key "id";
+      description
+        "List of dynamic CC metadata information objects.";
+      uses cc-state-entry-grouping;
+    }
+
+    list fmn-nmcd-sla.sla {
+      key "id";
+      description
+        "List of SLA contract information objects.";
+      uses sla-entry-grouping;
+    }
+
+    list fmn-nmcd-sla-report.sla {
+      key "id";
+      description
+        "List of SLA report information objects.";
+      uses sla-report-entry-grouping;
+    }
+  }
+
+  container pcore {
+    config false;
+    description
+      "A collection of all PCore entity metadata information objects.";
+    uses info-grouping;
+  }
 }

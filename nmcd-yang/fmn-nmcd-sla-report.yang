@@ -1,0 +1,153 @@
+module fmn-nmcd-sla-report {
+  yang-version 1.1;
+
+  namespace "urn:fmn:params:xml:ns:yang:nmcd-sla-report";
+
+  prefix nmcd-sla-report;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import fmn-nmcd-types {
+    prefix nmcd;
+  }
+
+  organization
+    "Federated Mission Networking (FMN) XX Working Group";
+
+  contact
+    "Editor:   some-one
+               <mailto:your-email@example.com>";
+
+  description
+    "This module defines the NMCD SLA report.";
+
+  revision 2019-12-31 {
+    description
+      "Initial version";
+    reference
+      "FMN Spiral 4 Service Instructions for Protected Core Networking";
+  }
+
+  grouping sla-report-grouping {
+    leaf id {
+      type string;
+      mandatory true;
+      description
+        "A unique identifier for this SLA report.";
+    }
+
+    leaf avg-sa-5 {
+      type decimal64 {
+        fraction-digits 5;
+        range 0..1;
+      }
+
+      mandatory true;
+
+      description
+        "Service Availability in a 5-minute time window.";
+    }
+
+    leaf avg-sa-60 {
+      type decimal64 {
+        fraction-digits 5;
+        range 0..1;
+      }
+
+      mandatory true;
+
+      description
+        "Service Availability in a one-hour time window.";
+    }
+
+    leaf avg-sa-1440 {
+      type decimal64 {
+        fraction-digits 5;
+        range 0..1;
+      }
+
+      mandatory true;
+
+      description
+        "Service Availability in a one-day time window.";
+    }
+
+    leaf avg-sa-43800 {
+      type decimal64 {
+        fraction-digits 5;
+        range 0..1;
+      }
+
+      mandatory true;
+
+      description
+        "Service Availability in a one-month time window.";
+    }
+
+    leaf mtrr {
+      type uint32;
+      units "s";
+      mandatory true;
+      description
+        "This parameter indicates average time it takes to repair faulty
+        services expressed in seconds (s).";
+    }
+
+    leaf mtbf {
+      type uint32;
+      units "s";
+      mandatory true;
+      description
+        "This parameter indicates average time between failures of the service
+        expressed in seconds (s).";
+    }
+
+    leaf create-time {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "The report information generation time.";
+    }
+
+    description
+      "Service Unavailability (SUA) is calculated as a fraction of time when
+      service is degraded, e.g., any of the selected dynamic performance metric
+      exceeds the compared service KPI threshold level in a time window.
+
+      Service Availability is expressed as a percentage of time when service
+      is within thresholds (i.e., 100% - SUA%).";
+  }
+
+  list sla {
+    key "id";
+    config false;
+
+    leaf id {
+      type nmcd:sla-id;
+      mandatory true;
+      description
+        "The SLA contract identifier.";
+    }
+
+    description
+      "A SLA report object for a SLA contract.";
+
+    list report {
+      key "id";
+
+      description
+        "The information contained in a SLA report.";
+
+      uses sla-report-grouping;
+    }
+
+    container metadata {
+      uses nmcd:instance-version-grouping;
+
+      description
+        "Metadata information of this SLA report repository instance";
+    }
+  }
+}
