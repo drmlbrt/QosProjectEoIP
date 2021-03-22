@@ -45,7 +45,7 @@ module fmn-nmcd-pcore {
  */
 
 	container pcore {
-		list fmn-nmcd-pcs{
+		list fmn-nmcd-pcs.pcs{
 			key "id";	
 			leaf id {
 				type uint32 ;
@@ -60,7 +60,7 @@ module fmn-nmcd-pcore {
 			}
 			description "";
 		}
-		list fmn-nmcd-pcs-state {
+		list fmn-nmcd-pcs-state.pcs {
 			key "id";	
 			leaf id {
 				type uint32;
@@ -75,7 +75,7 @@ module fmn-nmcd-pcore {
 			}	
 			description "";
 		}
-		list fmn-nmcd-cc {
+		list fmn-nmcd-cc.cc {
 			key "id";	
 			leaf id {
 				type uint32;
@@ -94,7 +94,7 @@ module fmn-nmcd-pcore {
 			}
 			description "";		
 		}
-		list fmn-nmcd-cc-state {
+		list fmn-nmcd-cc-state.cc {
 			key "id";	
 			leaf id {
 				type uint32 ;
@@ -112,7 +112,7 @@ module fmn-nmcd-pcore {
 			}	
 			description "";
 		}	
-		list fmn-nmcd-sla {
+		list fmn-nmcd-sla.sla {
 			key "id";	
 			leaf id {
 				type string ;
@@ -127,7 +127,7 @@ module fmn-nmcd-pcore {
 			}	
 			description "";
 		}
-		list fmn-nmcd-sla-report {
+		list fmn-nmcd-sla-report.sla {
 			key "id";	
 			leaf id {
 				type string ;
