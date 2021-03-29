@@ -1,0 +1,52 @@
+{
+    "data": {
+        "@xmlns": "urn:ietf:params:xml:ns:netconf:base:1.0",
+        "pcore": {
+            "@xmlns": "urn:fmn:params:xml:ns:yang:nmcd-pcore",
+            "fmn-nmcd-cc-state.cc": {
+                "id": null,
+                "metadata": {
+                    "updated": null,
+                    "version": null
+                },
+                "originator-id": null
+            },
+            "fmn-nmcd-cc.cc": {
+                "id": null,
+                "metadata": {
+                    "updated": null,
+                    "version": null
+                },
+                "originator-id": null
+            },
+            "fmn-nmcd-pcs-state.pcs": {
+                "id": null,
+                "metadata": {
+                    "updated": null,
+                    "version": null
+                }
+            },
+            "fmn-nmcd-pcs.pcs": {
+                "id": null,
+                "metadata": {
+                    "updated": null,
+                    "version": null
+                }
+            },
+            "fmn-nmcd-sla-report.sla": {
+                "id": null,
+                "metadata": {
+                    "updated": null,
+                    "version": null
+                }
+            },
+            "fmn-nmcd-sla.sla": {
+                "id": null,
+                "metadata": {
+                    "updated": null,
+                    "version": null
+                }
+            }
+        }
+    }
+}
