@@ -8,7 +8,7 @@ with open("./playbooks/create_loopback.txt", "r") as file:
 
 driver = get_network_driver("ios")
 #Error with IOS 15 - solved with optional arguments src: GitHub support pages
-device=driver("10.242.1.92", "hannibal", "hannibal", optional_args={"global_delay_factor":2})
+device = driver("10.242.1.92", "hannibal", "hannibal", optional_args={"global_delay_factor":2})
 print("\nConnecting to device        -------------------------------------")
 device.open()
 device.load_merge_candidate(config = playbook)

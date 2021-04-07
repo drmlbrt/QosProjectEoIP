@@ -1,0 +1,15 @@
+devices:
+  - id: 001
+    name: LAB-ISR-092-01
+    hostname: 10.242.1.92
+    device_type: ios
+    vendor: cisco
+    username: hannibal
+    password: hannibal
+#  - id: 002
+#    name: LAB-ISR-E302-01
+#    hostname: 10.242.1.2
+#    device_type: ios
+#    vendor: cisco
+#    username: ****
+#    password: ****

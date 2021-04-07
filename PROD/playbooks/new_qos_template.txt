@@ -1,0 +1,1738 @@
+!ACLs
+ip access-list extended ACL_QOS_BULK
+remark WSUS
+permit tcp any 10.8.130.47 0.0.1.0 eq 8530 8531
+ip access-list extended ACL_QOS_NETMGT
+permit icmp any 10.242.0.0 0.0.3.255
+permit icmp 10.242.0.0 0.0.3.255 any
+permit tcp any 10.242.0.0 0.0.3.255 eq 22
+permit tcp 10.242.0.0 0.0.3.255 eq 22 any
+permit tcp 10.243.203.128 0.0.0.7 eq 443 8443 any
+permit tcp any 10.243.203.128 0.0.0.7 eq 443 8443
+permit tcp 10.15.253.0 0.0.0.255 eq www 443 any
+permit tcp any 10.15.253.0 0.0.0.255 eq www 443
+permit tcp 10.1.0.0 0.0.255.255 eq www 443 any
+permit tcp any 10.1.0.0 0.0.255.255 eq www 443
+permit udp any 10.15.253.0 0.0.0.255 eq 2055
+permit udp 10.15.253.0 0.0.0.255 any eq snmp snmptrap 10161 10162
+permit udp any 10.15.253.0 0.0.0.255 eq snmp snmptrap 10161 10162
+permit udp host 10.8.134.36 any eq snmp snmptrap 10161 10162
+permit udp any host 10.8.134.36 eq snmp snmptrap 10161 10162
+permit udp 10.15.0.0 0.0.255.255 eq 1812 1813 any
+permit udp any 10.15.0.0 0.0.255.255 eq 1812 1813
+permit tcp 10.15.0.0 0.0.255.255 eq 1812 1813 any
+permit tcp any 10.15.0.0 0.0.255.255 eq 1812 1813
+ip access-list extended ACL_IP_DST_CDC
+remark Access-List Matching Traffic with CDC Range as Destination IP
+permit ip any 10.0.0.0 0.0.255.255
+ip access-list extended ACL_IP_DST_DMZ
+remark Access-List Matching Traffic with DMZ Range as Destination IP
+permit ip any 10.7.0.0 0.0.255.255
+ip access-list extended ACL_IP_DST_PRIO
+remark ILIAS
+permit tcp any host 10.8.132.16 eq www 443
+permit tcp any 10.8.132.10 0.0.0.1 eq 443
+permit tcp any 10.8.132.16 0.0.0.15 eq 8888 8889 8890
+permit tcp any host 10.8.132.55 eq 443
+permit tcp any host 10.8.134.156 eq www 443
+remark OMNITRACKER
+permit tcp any host 10.8.134.21 eq www 443
+remark TRUVIEW
+permit tcp any host 10.15.253.10 eq www 443 8443
+permit tcp any host 10.15.253.20 eq www 443 8443
+remark NGENIUS
+permit tcp any host 10.15.253.60 eq www 443 8443
+permit tcp any host 10.15.253.19 eq www 443 8443
+remark MYICP
+permit tcp any 10.8.131.72 0.0.0.2 eq www 443 8443
+remark DNS
+permit udp any 10.8.68.0 0.0.1.255 eq domain
+permit tcp any 10.8.68.0 0.0.1.255 eq domain
+remark TOTALHEALTH
+permit tcp any host 10.8.134.181 eq www 443
+permit tcp any host 10.8.134.182 eq www 443
+permit tcp any host 10.8.134.148 eq www 443
+remark HRM
+permit tcp any 10.8.138.56 0.0.0.7 eq 443 8443
+permit tcp any 10.8.138.64 0.0.0.7 eq 443 8443
+remark OracleBI
+permit tcp any 10.8.138.64 0.0.0.15 eq 9704
+remark OWA
+permit tcp any 10.8.144.0 0.0.1.255 eq www 443 8443
+remark DHCP
+permit udp any eq bootps bootpc tftp netbios-ns 10.8.130.55 0.0.1.0 eq bootps bootpc tftp netbios-ns
+ip access-list extended ACL_IP_DST_PROXY1
+permit tcp any host 10.7.19.21
+ip access-list extended ACL_IP_DST_PROXY2
+permit tcp any host 10.7.19.22
+ip access-list extended ACL_IP_DST_PROXY3
+permit tcp any host 10.7.19.23
+ip access-list extended ACL_IP_DST_PROXY4
+permit tcp any host 10.7.19.24
+ip access-list extended ACL_IP_DST_PROXY5
+permit tcp any host 10.7.19.13
+ip access-list extended ACL_IP_DST_S2S
+ip access-list extended ACL_IP_DST_SRV
+permit ip 10.0.0.0 0.0.255.255 10.242.0.0 0.1.252.63
+permit ip 10.8.0.0 0.0.255.255 10.242.0.0 0.1.252.63
+ip access-list extended ACL_IP_SRC_CDC
+remark Access-List Matching Traffic with CDC Range as Source IP
+permit ip 10.0.0.0 0.0.255.255 any
+ip access-list extended ACL_IP_SRC_DMZ
+remark Access-List Matching Traffic with DMZ Range as Source IP
+permit ip 10.7.0.0 0.0.255.255 any
+ip access-list extended ACL_IP_SRC_PRIO
+remark ILIAS
+permit tcp host 10.8.132.16 eq www 443 any
+permit tcp 10.8.132.10 0.0.0.1 eq 443 any
+permit tcp 10.8.132.16 0.0.0.15 eq 8888 8889 8890 any
+permit tcp host 10.8.132.55 eq 443 any
+permit tcp host 10.8.134.156 eq www 443 any
+remark OMNITRACKER
+permit tcp host 10.8.134.21 eq www 443 any
+remark TRUVIEW
+permit tcp host 10.15.253.10 eq www 443 8443 any
+permit tcp host 10.15.253.20 eq www 443 8443 any
+remark NGENIUS
+permit tcp host 10.15.253.60 eq www 443 8443 any
+permit tcp host 10.15.253.19 eq www 443 8443 any
+remark MYICP
+permit tcp 10.8.131.72 0.0.0.2 eq www 443 8443 any
+remark DNS
+permit udp 10.8.68.0 0.0.1.255 eq domain any
+permit tcp 10.8.68.0 0.0.1.255 eq domain any
+remark TOTALHEALTH
+permit tcp host 10.8.134.181 eq www 443 any
+permit tcp host 10.8.134.182 eq www 443 any
+permit tcp host 10.8.134.148 eq www 443 any
+remark HRM
+permit tcp 10.8.138.56 0.0.0.7 eq 443 8443 any
+permit tcp 10.8.138.64 0.0.0.7 eq 443 8443 any
+remark OracleBI
+permit tcp 10.8.138.64 0.0.0.15 eq 9704 any
+remark OWA
+permit tcp 10.8.144.0 0.0.1.255 eq www 443 8443 any
+remark DHCP
+permit udp 10.8.130.55 0.0.1.0 eq bootps bootpc tftp netbios-ns any eq bootps bootpc tftp netbios-ns
+ip access-list extended ACL_IP_SRC_PROXY1
+permit tcp host 10.7.19.21 any
+ip access-list extended ACL_IP_SRC_PROXY2
+permit tcp host 10.7.19.22 any
+ip access-list extended ACL_IP_SRC_PROXY3
+permit tcp host 10.7.19.23 any
+ip access-list extended ACL_IP_SRC_PROXY4
+permit tcp host 10.7.19.24 any
+ip access-list extended ACL_IP_SRC_PROXY5
+permit tcp host 10.7.19.13 any
+ip access-list extended ACL_IP_SRC_SRV
+permit ip 10.242.0.0 0.1.252.63 10.0.0.0 0.0.255.255
+permit ip 10.242.0.0 0.1.252.63 10.8.0.0 0.0.255.255
+ip access-list extended ACL_QOS_BULK
+remark WSUS
+permit tcp any 10.8.130.47 0.0.1.0 eq 8530 8531
+ip access-list extended ACL_QOS_NETMGT
+permit icmp any 10.242.0.0 0.0.3.255
+permit icmp 10.242.0.0 0.0.3.255 any
+permit tcp any 10.242.0.0 0.0.3.255 eq 22
+permit tcp 10.242.0.0 0.0.3.255 eq 22 any
+permit tcp 10.243.203.128 0.0.0.7 eq 443 8443 any
+permit tcp any 10.243.203.128 0.0.0.7 eq 443 8443
+permit tcp 10.15.253.0 0.0.0.255 eq www 443 any
+permit tcp any 10.15.253.0 0.0.0.255 eq www 443
+permit tcp 10.1.0.0 0.0.255.255 eq www 443 any
+permit tcp any 10.1.0.0 0.0.255.255 eq www 443
+permit udp any 10.15.253.0 0.0.0.255 eq 2055
+permit udp 10.15.253.0 0.0.0.255 any eq snmp snmptrap 10161 10162
+permit udp any 10.15.253.0 0.0.0.255 eq snmp snmptrap 10161 10162
+permit udp host 10.8.134.36 any eq snmp snmptrap 10161 10162
+permit udp any host 10.8.134.36 eq snmp snmptrap 10161 10162
+permit udp 10.15.0.0 0.0.255.255 eq 1812 1813 any
+permit udp any 10.15.0.0 0.0.255.255 eq 1812 1813
+permit tcp 10.15.0.0 0.0.255.255 eq 1812 1813 any
+permit tcp any 10.15.0.0 0.0.255.255 eq 1812 1813
+ip access-list extended ACL_QOS_TRUST
+!#
+!#Class-Maps
+!#
+!
+
+class-map match-any CM_QOS_M_VIDEO
+description Class Map for MPLS Marking of Tagged Video Traffic
+match ip dscp cs4  af41  af43
+class-map match-any CM_QOS_C_CALLSIG
+description Class Map for Policing Identification of Call Signaling Traffic
+match dscp cs3
+match mpls experimental topmost 7
+match qos-group 70
+class-map match-any CM_QOS_C_ROUTING
+description Class Map for Policing Identification of Routing Protocols Traffic
+match dscp cs6  cs7
+match mpls experimental topmost 6
+match qos-group 60
+class-map match-any CM_QOS_M_VOICE
+description Class Map for MPLS Marking of Tagged Voice Traffic
+match ip dscp ef
+class-map match-any CM_QOS_C_SRV
+description Class Map for Policing Identification of DCDN Server Traffic
+match ip dscp af23
+match qos-group 23
+class-map match-any CM_QOS_C_VOICE
+description Class Map for Policing Identification of Voice Traffic
+match dscp ef
+match mpls experimental topmost 5
+match qos-group 50
+class-map match-any CM_QOS_M_ROUTING
+description Class Map for MPLS Marking of Tagged Routing Traffic
+match ip dscp cs6  cs7
+class-map match-any CM_QOS_C_BUISNET
+description Class Map for Policing Identification of Business Networks Traffic
+match mpls experimental topmost 2
+match qos-group 20
+class-map match-any CM_QOS_M_CALLSIG
+description Class Map for MPLS Marking of Tagged Call Signaling Traffic
+match ip dscp cs3
+class-map match-any CM_QOS_C_VIDEO
+description Class Map for Policing Identification of Video Traffic
+match mpls experimental topmost 4
+match qos-group 40
+match dscp cs4  af41  af43
+class-map match-any CM_QOS_C_HIGHNET
+description Class Map for Policing Identification of System High Networks Traffic
+match mpls experimental topmost 3
+match qos-group 30
+class-map match-any CM_QOS_P_CALLSIG
+description Class Map for Payload Identification of Call Signaling Traffic
+match protocol rtcp
+match protocol skinny
+match protocol h323
+match protocol sip
+match protocol sip-tls
+class-map match-any CM_QOS_C_DEFAULT
+description Class Map for Policing Identification of Default Unclassified Traffic
+match dscp default
+match mpls experimental topmost 0
+match qos-group 0
+class-map match-any CM_QOS_P_TRUST
+description Class Map for Payload Identification of Trusted Traffic
+match access-group name ACL_QOS_TRUST
+class-map match-any CM_QOS_P_VOICE
+description Class Map for Payload Identification of Voice Traffic
+match protocol rtp audio
+match protocol rtp payload-type "104,118"
+match protocol ms-lync-audio
+class-map match-any CM_QOS_P_SRV
+description Class Map for Payload Identification of DCDN Server Traffic
+match access-group name ACL_IP_DST_SRV
+match access-group name ACL_IP_SRC_SRV
+class-map match-any CM_QOS_P_VIDEO
+description Class Map for Payload Identification of Video Traffic
+match protocol rtp video
+match protocol rtp payload-type "103,104"
+match protocol rtp payload-type "97,99"
+match protocol rtp payload-type "126,127"
+match protocol rtp payload-type "122,123,111,114,115"
+match protocol ms-lync-video
+class-map match-any CM_QOS_P_PROXY1
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY1
+match access-group name ACL_IP_DST_PROXY1
+class-map match-any CM_QOS_P_PROXY2
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY2
+match access-group name ACL_IP_DST_PROXY2
+class-map match-any CM_QOS_P_PROXY3
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY3
+match access-group name ACL_IP_DST_PROXY3
+class-map match-any CM_QOS_P_PROXY4
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY4
+match access-group name ACL_IP_DST_PROXY4
+class-map match-any CM_QOS_P_PROXY5
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY5
+match access-group name ACL_IP_DST_PROXY5
+class-map match-any CM_QOS_P_TRANSACT
+description Class Map for Payload Identification of CDN Transactional Data Traffic
+match protocol smtp
+match protocol mapi
+match access-group name ACL_IP_DST_DMZ
+match access-group name ACL_IP_SRC_DMZ
+class-map match-any CM_QOS_C_PUBNET
+description Class Map for Policing Identification of Public Net Traffic
+match mpls experimental topmost 1
+match qos-group 10
+class-map match-any CM_QOS_P_NETMGT
+description Class Map for Payload Identification of Network Management Traffic
+match protocol netflow
+match protocol telnet
+match protocol ssh
+match protocol snmp
+match protocol syslog
+match protocol icmp
+class-map match-any CM_QOS_C_PRIORITY
+description Class Map for Policing Identification of CDN Priority Apps Traffic
+match dscp af42
+match qos-group 42
+class-map match-any CM_QOS_C_BULK
+description Class Map for Policing Identification of CDN Bulk Data Traffic
+match dscp cs1  af11  af12  af13
+match qos-group 11
+class-map match-any CM_QOS_S2S_G0_OWN
+description Match anything coming from OWN Site towards WAN over G0
+match access-group name ACL_IP_S2S_G0_OWN
+match qos-group 91
+class-map match-any CM_QOS_S2S_G1_OWN
+description Match anything coming from OWN Site towards WAN over G1
+match access-group name ACL_IP_S2S_G1_OWN
+match qos-group 91
+class-map match-any CM_QOS_S2S_G2_OWN
+description Match anything coming from OWN Site towards WAN over G2
+match access-group name ACL_IP_S2S_G2_OWN
+match qos-group 91
+class-map match-any CM_QOS_C_TRANSACT
+description Class Map for Policing Identification of CDN Transactional Data Traffic
+match dscp af21  af22
+match qos-group 21
+class-map match-any CM_QOS_S2S_G1
+class-map match-any CM_QOS_S2S_G2
+class-map match-any CM_QOS_P_BULK
+description Class Map for Payload Identification of CDN Bulk Data Traffic
+match protocol ftp
+match protocol ftp-data
+match protocol cifs
+match protocol ms-update
+match access-group name ACL_QOS_BULK
+class-map match-any CM_QOS_S2S_G2_WAN
+description Match anything coming from WAN going to G2 PSN and vice-versa
+match access-group name ACL_IP_S2S_WAN
+match access-group name ACL_IP_S2S_G2_WAN
+match qos-group 90
+class-map match-any CM_QOS_P_PRIORITY
+description Class Map for Payload Identification of CDC/SMALS priority apps
+match access-group name ACL_IP_DST_PRIO
+match access-group name ACL_IP_SRC_PRIO
+class-map match-any CM_QOS_P_INTERACT
+description Class Map for Payload Identification of CDN Interactive Apps Traffic
+match protocol ms-wbt
+match protocol http
+match protocol ssl
+match protocol sip-tls
+match access-group name ACL_IP_DST_CDC
+match access-group name ACL_IP_SRC_CDC
+class-map match-any CM_QOS_C_NETMGT
+description Class Map for Policing Identification of Network Management Traffic
+match dscp cs2
+match qos-group 29
+match access-group name ACL_QOS_NETMGT
+class-map match-any CM_QOS_S2S_G0_WAN
+description Match anything coming from WAN going to G0 PSN and vice-versa
+match access-group name ACL_IP_S2S_WAN
+match access-group name ACL_IP_S2S_G0_WAN
+match qos-group 90
+class-map match-any CM_QOS_S2S_G1_WAN
+description Match anything coming from WAN going to G1 PSN and vice-versa
+match access-group name ACL_IP_S2S_WAN
+match access-group name ACL_IP_S2S_G1_WAN
+match qos-group 90
+class-map match-any CM_QOS_M_S2S
+description Class Map for S2S Qos-Group tagging
+match access-group name ACL_IP_DST_S2S
+class-map match-any CM_QOS_C_INTERACT
+description Class Map for Policing Identification of CDN Interactive Apps Traffic
+match dscp af31  af32  af33
+match qos-group 31
+match class-map CM_C_NBAR_APP_ILIAS
+!
+!
+!
+!#Policy-Maps PM_QOS_M
+!#
+!#
+policy-map PM_QOS_M_CYBNET
+class CM_QOS_M_S2S
+set qos-group 91
+class CM_QOS_M_VIDEO
+set mpls experimental imposition 4
+set qos-group 40
+class class-default
+set mpls experimental imposition 2
+set qos-group 20
+policy-map PM_QOS_M_PCNNET
+class CM_QOS_M_S2S
+set qos-group 91
+class CM_QOS_M_VOICE
+set mpls experimental imposition 5
+set qos-group 50
+class CM_QOS_M_VIDEO
+set mpls experimental imposition 4
+set qos-group 40
+class CM_QOS_M_ROUTING
+set mpls experimental imposition 6
+set qos-group 60
+class CM_QOS_M_CALLSIG
+set mpls experimental imposition 7
+set qos-group 70
+class class-default
+set mpls experimental imposition 3
+set qos-group 30
+policy-map PM_QOS_M_CORPNET_D
+class CM_QOS_P_VOICE
+set ip dscp ef
+set mpls experimental imposition 5
+set qos-group 50
+class CM_QOS_P_VIDEO
+set ip dscp af41
+set mpls experimental imposition 4
+set qos-group 40
+class CM_QOS_P_NETMGT
+set ip dscp cs2
+set mpls experimental imposition 7
+set qos-group 29
+class CM_QOS_P_SRV
+set ip dscp af23
+set qos-group 23
+set mpls experimental imposition 0
+class CM_QOS_P_PRIORITY
+set ip dscp af42
+set qos-group 42
+set mpls experimental imposition 0
+class CM_QOS_P_BULK
+set ip dscp af11
+set mpls experimental imposition 0
+set qos-group 11
+class CM_QOS_P_TRANSACT
+set ip dscp af21
+set mpls experimental imposition 0
+set qos-group 21
+class CM_QOS_P_INTERACT
+set ip dscp af31
+set mpls experimental imposition 0
+set qos-group 31
+class class-default
+set ip dscp default
+set mpls experimental imposition 0
+set qos-group 0
+policy-map PM_QOS_M_CORPNET_V
+class CM_QOS_M_VOICE
+set mpls experimental imposition 5
+set qos-group 50
+class CM_QOS_P_VOICE
+set ip dscp ef
+set mpls experimental imposition 5
+set qos-group 50
+class CM_QOS_M_VIDEO
+set mpls experimental imposition 4
+set qos-group 40
+class CM_QOS_P_VIDEO
+set ip dscp af41
+set mpls experimental imposition 4
+set qos-group 40
+class CM_QOS_M_CALLSIG
+set mpls experimental imposition 7
+set qos-group 70
+class CM_QOS_P_CALLSIG
+set ip dscp cs3
+set mpls experimental imposition 7
+set qos-group 70
+class class-default
+set ip dscp default
+set mpls experimental imposition 0
+set qos-group 0
+policy-map PM_QOS_M_SECNET
+class CM_QOS_M_S2S
+set qos-group 91
+class CM_QOS_M_VOICE
+set mpls experimental imposition 5
+set qos-group 50
+class CM_QOS_M_VIDEO
+set mpls experimental imposition 4
+set qos-group 40
+class CM_QOS_M_ROUTING
+set mpls experimental imposition 6
+set qos-group 60
+class CM_QOS_M_CALLSIG
+set mpls experimental imposition 7
+set qos-group 70
+class class-default
+set mpls experimental imposition 3
+set qos-group 30
+policy-map PM_QOS_M_EXONET
+class CM_QOS_M_S2S
+set qos-group 91
+class CM_QOS_M_VIDEO
+set mpls experimental imposition 4
+set qos-group 40
+class class-default
+set mpls experimental imposition 2
+set qos-group 20
+policy-map PM_QOS_M_PUBNET
+class CM_QOS_M_S2S
+set qos-group 91
+class class-default
+set ip dscp default
+set mpls experimental imposition 1
+set qos-group 10
+policy-map PM_QOS_M_EDUNET
+class CM_QOS_M_S2S
+set qos-group 91
+class class-default
+set mpls experimental imposition 2
+set qos-group 20
+policy-map PM_QOS_M_A4MNET
+class CM_QOS_M_S2S
+set qos-group 91
+class CM_QOS_M_VIDEO
+set mpls experimental imposition 4
+set qos-group 40
+class class-default
+set mpls experimental imposition 2
+set qos-group 20
+!
+!
+!
+!
+!
+!#Policy-Maps PM_QOS_C
+!
+!
+!
+!
+policy-map PM_QOS_C_PROXY
+class CM_QOS_P_PROXY1
+shape average percent 20
+police cir percent 40
+exceed-action drop
+class CM_QOS_P_PROXY2
+shape average percent 20
+police cir percent 40
+exceed-action drop
+class CM_QOS_P_PROXY3
+shape average percent 20
+police cir percent 40
+exceed-action drop
+class CM_QOS_P_PROXY4
+shape average percent 20
+police cir percent 40
+exceed-action drop
+class CM_QOS_P_PROXY5
+shape average percent 20
+police cir percent 40
+exceed-action drop
+class class-default
+shape average percent 10
+queue-limit 256 packets
+random-detect dscp-based
+random-detect dscp 18 28 36 10
+policy-map PM_QOS_C_V-85-5-0-10
+description SITE WITH SRV (1536K+)
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 10
+queue-limit 4096 packets
+police cir percent 40
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 15
+queue-limit 64 packets
+police cir percent 50
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 20
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 50
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 23
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 50
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 8
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+police cir percent 10
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 15
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 30
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+policy-map PM_QOS_C_V-50-0-0-50
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 4
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 17
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 13
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 43
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-50-0-0-50
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 4
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 17
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 13
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 43
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_V-50-0-50-0
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 4
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 17
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 13
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 43
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_V-50-40-5-5
+description HIGH HIGHNET (1536K+)
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 7
+queue-limit 4096 packets
+police cir percent 20
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 7
+queue-limit 64 packets
+police cir percent 30
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 25
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 9
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 25
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 45
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 70
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 7
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 30
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+policy-map PM_QOS_C_V-100-0-0-0
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 9
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 34
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 26
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 17
+random-detect dscp-based
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-100-0-0-0
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 9
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 34
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 26
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 17
+random-detect dscp-based
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-25-25-25-25
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 2
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 6
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 4
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 21
+random-detect dscp-based
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 21
+random-detect
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 21
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_V-50-50-0-0
+description HIGH HIGHNET (1536K+)
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 7
+queue-limit 4096 packets
+police cir percent 20
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 7
+queue-limit 64 packets
+police cir percent 30
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 25
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 9
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 25
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 59
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 3
+policy-map PM_QOS_C_V-25-75-0-0
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 2
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 6
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 4
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 64
+random-detect dscp-based
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-85-5-0-10
+description SITE WITH SRV (1536K+), NO VIDEO
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 10
+queue-limit 4096 packets
+police cir percent 40
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 15
+queue-limit 64 packets
+police cir percent 50
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 20
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 50
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 23
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 50
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 8
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+police cir percent 10
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 15
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 30
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+policy-map PM_QOS_C_NV-50-40-5-5
+description HIGH HIGHNET (1536K+), NO VIDEO
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 7
+queue-limit 4096 packets
+police cir percent 20
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 7
+queue-limit 64 packets
+police cir percent 30
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 25
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 9
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 25
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 45
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 70
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 7
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 30
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+policy-map PM_QOS_C_NV-25-75-0-0
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 2
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 6
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 4
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 64
+random-detect dscp-based
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-50-25-0-25
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 4
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 17
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 13
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 21
+random-detect dscp-based
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 21
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_V-50-5-40-5
+description HIGH BUISNET (1536K+)
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 7
+queue-limit 4096 packets
+police cir percent 20
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 7
+queue-limit 64 packets
+police cir percent 30
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+queue-limit 128 packets
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+police cir percent 25
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 9
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 25
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 45
+random-detect dscp-based
+police cir percent 70
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 7
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 25
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+policy-map PM_QOS_C_V-50-25-0-25
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 4
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 17
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 13
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 21
+random-detect dscp-based
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 21
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-50-5-5-40
+description HIGH PUBNET (1536K+), NO VIDEO
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 7
+queue-limit 4096 packets
+police cir percent 20
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 7
+queue-limit 64 packets
+police cir percent 30
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 25
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 9
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 25
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 20
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 45
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 70
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+policy-map PM_QOS_C_V-25-25-25-25
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 2
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 6
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 4
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 21
+random-detect dscp-based
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 21
+random-detect
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 21
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-50-0-50-0
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 2
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 6
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 4
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 21
+random-detect dscp-based
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 21
+random-detect
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 21
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_V-25-50-0-25
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 2
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 6
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 4
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 43
+random-detect dscp-based
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 21
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_NV-50-5-40-5
+description HIGH BUISNET (1536K+), NO VIDEO
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 7
+queue-limit 4096 packets
+police cir percent 20
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 7
+queue-limit 64 packets
+police cir percent 30
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 25
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 9
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 25
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 45
+random-detect dscp-based
+police cir percent 70
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 7
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 30
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+policy-map PM_QOS_C_NV-25-50-0-25
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 5
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 5
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 2
+set mpls experimental topmost 7
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 6
+random-detect dscp-based
+class CM_QOS_C_BULK
+bandwidth remaining percent 4
+random-detect dscp-based
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 43
+random-detect dscp-based
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 21
+fair-queue
+random-detect
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 4
+fair-queue
+random-detect
+class class-default
+fair-queue
+random-detect
+policy-map PM_QOS_C_V-50-5-5-40
+description HIGH PUBNET (1536K+)
+class CM_QOS_C_VOICE
+priority level 1 percent 10
+class CM_QOS_C_VIDEO
+priority level 2 percent 15
+class CM_QOS_C_ROUTING
+bandwidth remaining percent 1
+police cir percent 6
+class CM_QOS_C_NETMGT
+bandwidth remaining percent 1
+police cir percent 6
+set mpls experimental topmost 7
+class CM_QOS_C_CALLSIG
+bandwidth remaining percent 1
+set mpls experimental topmost 7
+police cir percent 6
+class CM_QOS_C_SRV
+bandwidth remaining percent 7
+queue-limit 4096 packets
+police cir percent 20
+class CM_QOS_C_PRIORITY
+bandwidth remaining percent 7
+queue-limit 64 packets
+police cir percent 30
+class CM_QOS_C_INTERACT
+bandwidth remaining percent 9
+random-detect dscp-based
+random-detect dscp 26 32 40 10
+queue-limit 128 packets
+police cir percent 25
+class CM_QOS_C_TRANSACT
+bandwidth remaining percent 9
+police cir percent 50
+service-policy PM_QOS_C_PROXY
+class CM_QOS_C_BULK
+bandwidth remaining percent 5
+random-detect dscp-based
+police cir percent 25
+class CM_QOS_C_HIGHNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 15
+class CM_QOS_C_BUISNET
+bandwidth remaining percent 7
+random-detect dscp-based
+police cir percent 20
+class CM_QOS_C_PUBNET
+bandwidth remaining percent 45
+fair-queue
+random-detect
+random-detect precedence 0 2 32 2
+random-detect precedence 1 5 32 3
+random-detect precedence 2 10 32 4
+random-detect precedence 3 20 32 4
+police cir percent 70
+exceed-action set-mpls-exp-topmost-transmit 1
+violate-action drop
+class CM_QOS_C_DEFAULT
+bandwidth remaining percent 1
+fair-queue
+random-detect
+random-detect precedence 0 1 28 1
+police cir percent 10
+class class-default
+fair-queue
+random-detect
+police cir percent 1
+!#
+!#policy-Maps PM_QOS_P
+!#
+class-map match-all CM_QOS_PUP_CORP
+match access-group name ACL_QOS_PUP_SRC
+match access-group name ACL_QOS_PUP_DST
+class-map match-all CM_QOS_C_PERUSER_0
+match access-group name ACL_QOS_PERUSER_128_0
+match access-group name ACL_QOS_PERUSER_DENY
+!
+class-map match-any CM_QOS_P_CALLSIG
+description Class Map for Payload Identification of Call Signaling Traffic
+match protocol rtcp
+match protocol skinny
+match protocol h323
+match protocol sip
+match protocol sip-tls
+class-map match-any CM_QOS_P_TRUST
+description Class Map for Payload Identification of Trusted Traffic
+match access-group name ACL_QOS_TRUST
+class-map match-any CM_QOS_P_VOICE
+description Class Map for Payload Identification of Voice Traffic
+match protocol rtp audio
+match protocol rtp payload-type "104,118"
+match protocol ms-lync-audio
+class-map match-any CM_QOS_P_SRV
+description Class Map for Payload Identification of DCDN Server Traffic
+match access-group name ACL_IP_DST_SRV
+match access-group name ACL_IP_SRC_SRV
+class-map match-any CM_QOS_P_VIDEO
+description Class Map for Payload Identification of Video Traffic
+match protocol rtp video
+match protocol rtp payload-type "103,104"
+match protocol rtp payload-type "97,99"
+match protocol rtp payload-type "126,127"
+match protocol rtp payload-type "122,123,111,114,115"
+match protocol ms-lync-video
+class-map match-any CM_QOS_P_PROXY1
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY1
+match access-group name ACL_IP_DST_PROXY1
+class-map match-any CM_QOS_P_PROXY2
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY2
+match access-group name ACL_IP_DST_PROXY2
+class-map match-any CM_QOS_P_PROXY3
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY3
+match access-group name ACL_IP_DST_PROXY3
+class-map match-any CM_QOS_P_PROXY4
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY4
+match access-group name ACL_IP_DST_PROXY4
+class-map match-any CM_QOS_P_PROXY5
+description Class Map for Payload Identification of Proxy Traffic
+match access-group name ACL_IP_SRC_PROXY5
+match access-group name ACL_IP_DST_PROXY5
+class-map match-any CM_QOS_P_TRANSACT
+description Class Map for Payload Identification of CDN Transactional Data Traffic
+match protocol smtp
+match protocol mapi
+match access-group name ACL_IP_DST_DMZ
+match access-group name ACL_IP_SRC_DMZ
+class-map match-any CM_QOS_P_NETMGT
+description Class Map for Payload Identification of Network Management Traffic
+match protocol netflow
+match protocol telnet
+match protocol ssh
+match protocol snmp
+match protocol syslog
+match protocol icmp
+class-map match-any CM_QOS_P_BULK
+description Class Map for Payload Identification of CDN Bulk Data Traffic
+match protocol ftp
+match protocol ftp-data
+match protocol cifs
+match protocol ms-update
+match access-group name ACL_QOS_BULK
+class-map match-any CM_QOS_P_PRIORITY
+description Class Map for Payload Identification of CDC/SMALS priority apps
+match access-group name ACL_IP_DST_PRIO
+match access-group name ACL_IP_SRC_PRIO
+class-map match-any CM_QOS_P_INTERACT
+description Class Map for Payload Identification of CDN Interactive Apps Traffic
+match protocol ms-wbt
+match protocol http
+match protocol ssl
+match protocol sip-tls
+match access-group name ACL_IP_DST_CDC
+match access-group name ACL_IP_SRC_CDC
+!#
+!#
+!#Policy-Map Shapers
+!#
+!#
+policy-map PM_QOS_S_C00
+class class-default
+shape average percent 99
+policy-map PM_QOS_S_E13
+class class-default
+shape average percent 99
+policy-map PM_QOS_S_E12
+class class-default
+shape average percent 99
+policy-map PM_QOS_S_E11
+class class-default
+shape average percent 99
+policy-map PM_QOS_S_E10
+class class-default
+shape average percent 99
+policy-map PM_QOS_S_G2
+class class-default
+shape average percent 100
+service-policy PM_QOS_C_NV-25-25-25-25
+policy-map PM_QOS_S_G0
+class class-default
+shape average percent 100
+service-policy PM_QOS_C_NV-25-25-25-25
+policy-map PM_QOS_S_G1
+class class-default
+shape average percent 99
+service-policy PM_QOS_C_NV-25-25-25-25
+policy-map PM_QOS_S2S
+description Retag Qos-group for WAN towards S2S Sites to capture MPLS
+class class-default
+set qos-group 90
+policy-map PM_QOS_S_BCK
+class class-default
+shape average 256000
+!#
+!# Service-Policy - Bind to interfaces
+interface tunnel 10
+service-policy output PM_QOS_S_G0
+interface tunnel 11
+service-policy output PM_QOS_S_G1
+interface tunnel 12
+service-policy output PM_QOS_S_G2
+interface vlan3
+service-policy input PM_QOS_M_SECNET
+interface vlan29
+service-policy input PM_QOS_M_PUBNET
+interface vlan2929
+service-policy input PM_QOS_M_PUBNET
+interface vlan21
+service-policy input PM_QOS_M_EXONET
+interface vlan34
+service-policy input PM_QOS_M_A4MNET
+interface vlan900
+service-policy input PM_QOS_M_CORPNET_D
+interface Vlan910
+service-policy input PM_QOS_M_CORPNET_D
+!#Done

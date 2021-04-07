@@ -1,0 +1,5 @@
+
+|-- [ 10.242.1.92]
+|---- LAB-ISR-092-01 :         ISR4451-X/K9 : Cisco               
+|--------ISR Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 17.4.1b, RELEASE SOFTWARE (fc2)
+|--LAB-ISR-092-01  : Version 17.4.1b    : NOT OK
