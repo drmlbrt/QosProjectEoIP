@@ -21,18 +21,12 @@ that are able to get:
 This yaml file should be created after discovery and you can always add fixed 'devices' by following the syntax
 
 """
-from update_qos import findqosstrings
-from utils import *
 from menu import menu
 
-getdevices = import_from_yaml()
-selection = menu()
-
-for items in getdevices:
-    devices = create_devices(items)
-    for _, device in devices.items():
-
-        if not device.connect():
-            print(f"----- Connection failed: {device.name}")
-            continue
-        device.disconnect()
+if __name__ == "__main__":
+    try:
+        menu()
+    except KeyboardInterrupt:
+        print("="*56)
+        print("\nExiting the program")
+        print("="*56)

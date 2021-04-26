@@ -45,6 +45,6 @@
     "model": "ISR4451-X/K9",
     "os_version": "ISR Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 17.4.1b, RELEASE SOFTWARE (fc2)",
     "serial_number": "FGL203211NP",
-    "uptime": 7500,
+    "uptime": 680700,
     "vendor": "Cisco"
 }

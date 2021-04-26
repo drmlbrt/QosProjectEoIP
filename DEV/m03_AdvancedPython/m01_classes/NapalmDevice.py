@@ -6,8 +6,6 @@ import napalm
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-from update_qos import *
-
 class NapalmDevice(Device):
 
     def connect(self):
@@ -39,5 +37,21 @@ class NapalmDevice(Device):
         return backup
 
     def disconnect(self):
-        print(f"----- Disconnected from {self.hostname}")
         return self.connection.close()
+
+    def load_config(self, playbookqostemplate):
+        self.playbookqostemplate=playbookqostemplate
+        return self.connection.load_merge_candidate(config=self.playbookqostemplate)
+
+    def compare_config(self):
+        return self.connection.compare_config()
+
+    def commit_config(self):
+        return self.connection.commit_config()
+
+    def discard_config(self):
+        return self.connection.discard_config()
+
+    def clicmd(self, commands):
+        self.commands = commands
+        return self.connection.cli(self.commands)

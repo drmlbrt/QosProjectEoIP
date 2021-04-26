@@ -1,8 +1,12 @@
 import yaml
 import json
 from pprint import pprint
+import os.path
 from NapalmDevice import NapalmDevice
-from NcclientDevice import NcclientDevice
+from termcolor import colored
+from colorama import init
+from colorama import Fore, Back, Style
+init(autoreset=True)
 
 
 def import_from_yaml():
@@ -10,6 +14,14 @@ def import_from_yaml():
         yamldict = yaml.full_load(file)
         for devices in yamldict.values():
             return devices
+
+
+def import_from_yaml_single():
+    with open("../playbooks/devices_single.yaml", "r") as file:
+        yamldict = yaml.full_load(file)
+        for devices in yamldict.values():
+            return devices
+
 
 def create_devices(getdevices):
     try:
@@ -26,9 +38,36 @@ def create_devices(getdevices):
         created_devices["nxos-napalm"].set_credentials(username=getdevices["username"], password=getdevices["password"])
 
         return created_devices
+
     except Exception as error:
         print(f"################## {error}")
         pass
+
+
+def getrunningconfig():
+
+    getdevices = import_from_yaml_single()
+
+    for i in getdevices:
+        devices = create_devices(i)
+
+        for device in devices.values():
+
+            if not device.connect():
+                print(f"----- Connection failed to {device.name}")
+                continue
+
+        print("\n----- Get Running Config of the device and store it as a separate file")
+
+        with open(f"../backup_runcfg/{i['name']}.cfg", "w+") as file:
+            file.write(device.get_running())
+            file.close()
+
+
+        print("\n----- Running Config store in /backup_runcfg")
+        device.disconnect()
+        return i['hostname']
+
 
 def compliance_check():
     compl_os_check = ["15.7(3)M6", "17.3.2"]
@@ -54,7 +93,7 @@ def compliance_check():
 
         with open("../playbooks/compliance_config.txt", "r") as file:
             stringfile = json.load(file)
-            pprint(stringfile)
+            print("="*56)
             print(stringfile["hostname"])
 
         with open("../playbooks/compliance_check.txt", "w+") as ccfile:
@@ -80,4 +119,50 @@ def compliance_check():
         ccfile.close()
         file.close()
         device.disconnect()
+
+
+def findstrings(devicename):
+    linenum = 0
+    dict_of_strings = {"policy_maps" : ["policy-map PM_QOS_"],
+                       "class_maps" : ["class-map match-any CM_QOS_",
+                       "class-map match-all CM_QOS_"],
+                       "acl" :["ip access-list extended ACL_QOS",
+                       "ip access-list extended ACL_IP"]}
+
+    print(f"\n----- Looping through strings to find for {devicename}")
+    with open(f"../backup_runcfg/{devicename}.cfg","rt") as myfile:
+        for line in myfile:
+            linenum += 1
+            if line.find("QOS") != -1:
+                for k, v in dict_of_strings.items():
+                    with open("../playbooks/qos/" + k + "_detected.cfg", "a+") as file:
+                        for item in v:
+                            if item in line:
+                                file.write("no " + line)
+                    file.close()
+    myfile.close()
+    return
+
+def get_device_name_from_yaml():
+    with open("../playbooks/devices.yaml", "r") as file:
+        yamldict = yaml.full_load(file)
+        devicename = yamldict['devices'][0]['name']
+    return devicename
+
+def choice():
+    inputs = ["yes", "Yes", "Y", "y", "YES"]
+    inputno = ["no", "No", "N", "n", "NO"]
+    txt = "Respond with yes or no?: "
+    selection = str(input(Fore.BLACK + Back.YELLOW + txt))
+    while True:
+        if selection in inputs:
+            print(f"You have selected {selection}")
+            return selection
+        elif selection in inputno:
+            print(f"You have selected {selection}")
+            return selection
+        else:
+            print(f"You have entered an invalid selection try: {inputs}")
+            break
+
 

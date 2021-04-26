@@ -1,9 +1,9 @@
-"""
-Here we define the Device Class, this is the common device information we should use to connect to a device.
-"""
-from update_qos import *
+
 
 class Device:
+    """
+    Here we define the Device Class, this is the common device information we should use to connect to a device.
+    """
 
     def __init__(self, name, hostname, device_type):
         self.name = name
@@ -29,10 +29,17 @@ class Device:
     def disconnect(self):
         raise NotImplementedError("Please Implement the disconnect() method")
 
-    def findqosstrings(self):
-        self.findqosstrings = findqosstrings(self.name)
-        return findqosstrings
+    def load_config(self):
+        raise NotImplementedError("Please Implement the put_config() method")
 
-    def update_qos_template(self):
-        self.update_qos_template = update_qos_template(self.name)
+    def compare_config(self):
+        raise NotImplementedError("Please Implement the compare_config() method")
 
+    def commit_config(self):
+        raise NotImplementedError("Please Implement the commit_config() method")
+
+    def discard_config(self):
+        raise NotImplementedError("Please Implement the discard_config() method")
+
+    def clicmd(self):
+        raise NotImplementedError("Please Implement the discard_config() method")
